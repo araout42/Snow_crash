@@ -1,0 +1,17 @@
+# Search for all file owned by flag00
+
+# find / -user flag00 -group flag00 2>/dev/null 
+# => /usr/sbin/john
+# => /rofs/usr/sbin/john
+
+# cat /usr/sbin/john 
+# => cdiiddwpgswtgt
+
+# rot15 cdiiddwpgswtgt
+# => nottoohardhere
+
+# su flag00
+# pw = nottoohardhere
+
+# getflag
+# => x24ti5gi3x0ol2eh4esiuxias

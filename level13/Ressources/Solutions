@@ -5,7 +5,6 @@ total 8
 $ ./level13 
 UID 2013 started us but we we expect 4242
 
-we could try and find a way to set pid to 4242... but it seem complicate
 
 $strings level13
 exit
@@ -16,15 +15,17 @@ UID %d started us but we we expect %d
 boe]!ai0FB@.:|L6l@A?>qJ}I
 your token is %s
 
-looks like the program check pid if pid = 4242 it will deliver token
+looks like the program check uid if pid = 4242 it will deliver token
 
 
 $gdb ./level13
 
 (gdb) disas main
+...
 0x08048595 <+9>:     call   0x8048380 <getuid@plt>
 0x0804859a <+14>:    cmp    $0x1092,%eax
 0x0804859f <+19>:    je     0x80485cb <main+63>
+...
 
 call getuid
 
@@ -34,7 +35,7 @@ so we just have to do %eax=$0x1092
 and the jump will occur
 
 
-we step instruction until we re before the cmp instruction
+we step instruction until we are before the cmp instruction
 
 then set eax register the result of getuid to 4242
 

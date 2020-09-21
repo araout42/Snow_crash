@@ -1,29 +1,29 @@
-# ls -la
-# => total 24
-# => dr-x------ 1 level02 level02  120 Mar  5  2016 .
-# => d--x--x--x 1 root    users    340 Aug 30  2015 ..
-# => -r-x------ 1 level02 level02  220 Apr  3  2012 .bash_logout
-# => -r-x------ 1 level02 level02 3518 Aug 30  2015 .bashrc
-# => ----r--r-- 1 flag02  level02 8302 Aug 30  2015 level02.pcap
-# => -r-x------ 1 level02 level02  675 Apr  3  2012 .profile
+$ls -la
+  total 24
+  dr-x------ 1 level02 level02  120 Mar  5  2016 .
+  d--x--x--x 1 root    users    340 Aug 30  2015 ..
+  -r-x------ 1 level02 level02  220 Apr  3  2012 .bash_logout
+  -r-x------ 1 level02 level02 3518 Aug 30  2015 .bashrc
+  ----r--r-- 1 flag02  level02 8302 Aug 30  2015 level02.pcap
+  -r-x------ 1 level02 level02  675 Apr  3  2012 .profile
 
-#we download level02.pcap and open it with wireshark
-# we press ctrl+alt+shift+t to follow TCP stream
+we download level02.pcap and open it with wireshark
+ we press ctrl+alt+shift+t to follow TCP stream
 
-# ..wwwbugs login: l.le.ev.ve.el.lX.X
-# Password: ft_wandr...NDRel.L0L
-# Login incorrect
-# wwwbugs login: 
+ ..wwwbugs login: l.le.ev.ve.el.lX.X
+ Password: ft_wandr...NDRel.L0L
+ Login incorrect
+ wwwbugs login: 
 
-# if we hit save and show data as UTF-8 we can see the Password ft_wandr'''NDRel'''L0L
-# we assume the wierd char are delete char
+ if we hit save and show data as UTF-8 we can see the Password ft_wandr'''NDRel'''L0L
+ we assume the wierd char are delete char
 
-#then we have the password
+then we have the password
 
-#ft_waNDReL0L
+ft_waNDReL0L
 
-#su flag02
-# password : ft_waNDRELOL
+$su flag02
+ password : ft_waNDRELOL
 
-#getflag
-# => kooda2puivaav1idi4f57q8iq
+$getflag
+  kooda2puivaav1idi4f57q8iq

